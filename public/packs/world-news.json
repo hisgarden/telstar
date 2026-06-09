@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "removed": [],
+  "channels": [
+    {
+      "name": "NHK World-Japan",
+      "id": "NHKWorldJapan.jp",
+      "country": "jp",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/NHK_World_Japan.png",
+      "url": "https://nhk.lls.pbs.org/index.m3u8"
+    },
+    {
+      "name": "DW English",
+      "id": "DWEnglish.de",
+      "country": "de",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://i.imgur.com/8MRNFb9.png",
+      "url": "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8"
+    },
+    {
+      "name": "France 24 English",
+      "id": "France24English.fr",
+      "country": "fr",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_FRANCE_24/images/LOGO_HD/image.png",
+      "url": "https://live.france24.com/hls/live/2037218-b/F24_EN_HI_HLS/master_5000.m3u8"
+    },
+    {
+      "name": "Al Jazeera English",
+      "id": "AlJazeeraEnglish.qa",
+      "country": "qa",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://i.imgur.com/7bRVpnu.png",
+      "url": "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8"
+    },
+    {
+      "name": "Reuters",
+      "id": "Reuters.gb",
+      "country": "gb",
+      "funding": "newswire",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://i.imgur.com/6eQ2nCJ.png",
+      "url": "https://amg00453-reuters-amg00453c1-xumo-us-2073.playouts.now.amagi.tv/reuters-reuters-hls/playlist.m3u8"
+    },
+    {
+      "name": "BBC World News",
+      "id": "BBCWorldNews.uk",
+      "country": "gb",
+      "funding": "public-broadcaster",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png",
+      "url": "https://vs-hls-push-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/iptv_hd_abr_v1.m3u8"
+    },
+    {
+      "name": "Bloomberg TV",
+      "id": "BloombergTV.us",
+      "country": "us",
+      "funding": "commercial",
+      "categories": [
+        "business"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Bloomberg_Television_logo_white.svg",
+      "url": "https://liveprodusphoenixeast.akamaized.net/USPhx-HD/Channel-TX-USPhx-AWS-virginia-1/Source-USPhx-16k-1-s6lk2-BP-07-02-81ykIWnsMsg_live.m3u8"
+    },
+    {
+      "name": "CBS News 24/7",
+      "id": "CBSNews247.us",
+      "country": "us",
+      "funding": "commercial",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/86/bd/70/86bd7086-14ba-c8ec-dfcb-320828c4e033/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/512x512bb.jpg",
+      "url": "https://cbsn-us.cbsnstream.cbsnews.com/out/v1/55a8648e8f134e82a470f83d562deeca/master.m3u8"
+    },
+    {
+      "name": "Euronews English",
+      "id": "EuronewsEnglish.fr",
+      "country": "fr",
+      "funding": "commercial",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/Euro_News.png",
+      "url": "https://dash4.antik.sk/live/test_euronews/playlist.m3u8"
+    },
+    {
+      "name": "KBS World",
+      "id": "KBSWorld.kr",
+      "country": "kr",
+      "funding": "public-broadcaster",
+      "categories": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/7DqgELX.png",
+      "url": "https://liveh12.vtvprime.vn/hls/KBS/03.m3u8"
+    },
+    {
+      "name": "CGTN",
+      "id": "CGTN.cn",
+      "country": "cn",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/CGTN.svg/960px-CGTN.svg.png",
+      "url": "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8"
+    },
+    {
+      "name": "FIFA+ (English)",
+      "id": "FIFAPlusEnglish.gb",
+      "country": "gb",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://a62dad94.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0ZJRkFQbHVzRW5nbGlzaF9ITFM/playlist.m3u8"
+    },
+    {
+      "name": "FIFA+ Hispanic America",
+      "id": "FIFAPlusHispanicAmerica.mx",
+      "country": "mx",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://6c849fb3.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctbXhfRklGQVBsdXNTcGFuaXNoLTFfSExT/playlist.m3u8"
+    },
+    {
+      "name": "FIFA+ Italy",
+      "id": "FIFAPlusItaly.it",
+      "country": "it",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://5d95f7d7.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWl0X0ZJRkFQbHVzSXRhbGlhbl9ITFM/playlist.m3u8"
+    },
+    {
+      "name": "FIFA+ German",
+      "id": "FIFAPlusGerman.de",
+      "country": "de",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://4397879b.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWRlX0ZJRkFQbHVzR2VybWFuX0hMUw/playlist.m3u8"
+    },
+    {
+      "name": "FIFA+ Portuguese",
+      "id": "FIFAPlusPortuguese.br",
+      "country": "br",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://e3be9ac5.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctYnJfRklGQVBsdXNQb3J0dWd1ZXNlX0hMUw/playlist.m3u8"
+    },
+    {
+      "name": "FIFA+ French",
+      "id": "FIFAPlusFrench.fr",
+      "country": "fr",
+      "funding": "commercial",
+      "categories": [
+        "sports"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/FIFA%2B_(2025).svg/960px-FIFA%2B_(2025).svg.png",
+      "url": "https://37b4c228.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/playlist.m3u8"
+    },
+    {
+      "name": "CNA Originals",
+      "id": "CNAOriginals.sg",
+      "country": "sg",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/CNA_new_logo.svg/500px-CNA_new_logo.svg.png",
+      "url": "https://amg01082-cna-amg01082c1-rlaxx-us-11304.playouts.now.amagi.tv/playlist.m3u8"
+    },
+    {
+      "name": "TRT World",
+      "id": "TRTWorld.tr",
+      "country": "tr",
+      "funding": "state-funded",
+      "categories": [
+        "news"
+      ],
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6e/TRT_World_logo.svg",
+      "url": "https://dash2.antik.sk/live/test_trt_world_atktv/playlist.m3u8"
+    }
+  ]
+}

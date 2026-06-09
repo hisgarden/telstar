@@ -1,0 +1,54 @@
+version: "3"
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - bun install
+
+  dev:
+    desc: Run the native macOS app (hot-reloads the frontend)
+    cmds:
+      - bun run tauri dev
+
+  test:
+    desc: Run the test suite
+    cmds:
+      - bun test
+
+  build:
+    desc: Type-check and build the web frontend, then the native app
+    cmds:
+      - bun run build
+      - bun run tauri build
+
+  ios:dev:
+    desc: Build and run on the iOS Simulator
+    cmds:
+      - bun run tauri ios dev
+
+  ios:build:
+    desc: Build the iOS app
+    cmds:
+      - bun run tauri ios build
+
+  sbom:
+    desc: Regenerate the CycloneDX SBOMs (JS + Rust), Bun-only — no npm
+    cmds:
+      - mkdir -p sbom
+      - FETCH_LICENSE=true bunx @cyclonedx/cdxgen@11 -t javascript --lifecycle pre-build --no-recurse -o sbom/telstar-js.cdx.json .
+      - FETCH_LICENSE=true bunx @cyclonedx/cdxgen@11 -t rust --no-recurse -o sbom/telstar-rust.cdx.json src-tauri
+
+  release:bump:
+    desc: "Sync the version across all manifests + create an annotated tag. Usage: task release:bump -- 0.5.1 [--push]"
+    cmds:
+      - scripts/bump-version.sh {{.CLI_ARGS}}
+
+  release:macos:
+    desc: "Build, sign, notarize + publish the macOS DMG to GitHub Releases and bump the Homebrew cask. Usage: task release:macos -- 0.5.0 [--check|--dry-run]"
+    cmds:
+      - scripts/release-macos.sh {{.CLI_ARGS}}
+
+# ── Changelog (most recent first) ────────────────────────────────────────────
+# 2026-05-29  Add sbom task (Bun-only CycloneDX generation for JS + Rust).
+# 2026-05-29  Initial Taskfile: install, dev, test, build, ios:dev, ios:build.
