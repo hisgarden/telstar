@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Telstar">
+  <!-- App-icon source: the Telstar mark (globe + broadcast arcs) on the app's
+       dark-navy theme. Mark geometry matches public/telstar-logo.svg exactly. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1726" />
+      <stop offset="1" stop-color="#18293f" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.72" cy="0.28" r="0.5">
+      <stop offset="0" stop-color="#9ecbff" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#9ecbff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)" />
+  <rect width="1024" height="1024" fill="url(#glow)" />
+  <!-- Mark: original 64-unit artwork scaled (×13) and centered on the canvas. -->
+  <g transform="translate(83,109) scale(13)"
+     fill="none" stroke="#9ecbff" stroke-width="3"
+     stroke-linecap="round" stroke-linejoin="round">
+    <!-- Globe -->
+    <circle cx="25" cy="39" r="15" />
+    <ellipse cx="25" cy="39" rx="6" ry="15" />
+    <line x1="10" y1="39" x2="40" y2="39" />
+    <!-- Broadcast: signal radiating worldwide -->
+    <circle cx="46" cy="19" r="2.5" fill="#9ecbff" stroke="none" />
+    <path d="M51 14 a9 9 0 0 1 0 12" />
+    <path d="M56 9 a16 16 0 0 1 0 22" />
+  </g>
+</svg>

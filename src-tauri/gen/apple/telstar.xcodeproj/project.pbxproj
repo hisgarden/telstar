@@ -1,0 +1,498 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0412BD681C967973F82EA016 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49CA2B6AFA9E4F0838FC284F /* main.mm */; };
+		195AB3EBDA077404453CAA3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E77B7276E34706B17D9DC3A /* LaunchScreen.storyboard */; };
+		33A964801E26D6013D6B566E /* libapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B11F4CA20B561D04F6092384 /* libapp.a */; };
+		415031B49A07D6874DA2BE51 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 3638A479E08F7227BE08F6FA /* assets */; };
+		4BB28702A43AB890E70621CC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C8F6E1B3394EDEB2EC764C /* Security.framework */; };
+		5812D949B1AF37A757F4E50C /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5621F1A4C87BBE6E269957BA /* Metal.framework */; };
+		820D63E99712A790024F4759 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B238C44D1E73D731345A2 /* MetalKit.framework */; };
+		9E7A37E094B2209D73E7AA02 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49728FD5C6B098DD883A4D27 /* QuartzCore.framework */; };
+		A4F2B9C2C69F22174203D27C /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754D3E2D3E8D341F411603B8 /* AVFAudio.framework */; };
+		AB393AC05A183BFECB6C4E10 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB2C709DFF5259478CA76130 /* UIKit.framework */; };
+		B520050E6DBB2BB7E210992E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8621E3509236C38A330048D3 /* CoreGraphics.framework */; };
+		DD44370BBAF80B35C15B34F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3B0260005800E443AC5488B /* Assets.xcassets */; };
+		DDF72A23699A4DC9A2F375B2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF0216E552685B2A8A529D0 /* WebKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0DF0216E552685B2A8A529D0 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		0FB3B3302B466740134590E1 /* telstar_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = telstar_iOS.entitlements; sourceTree = "<group>"; };
+		3638A479E08F7227BE08F6FA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
+		3A512131D8738C2174429E5D /* scan.rs */ = {isa = PBXFileReference; path = scan.rs; sourceTree = "<group>"; };
+		47A296E50E83FA10683B8FA7 /* icloud.rs */ = {isa = PBXFileReference; path = icloud.rs; sourceTree = "<group>"; };
+		49728FD5C6B098DD883A4D27 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		49CA2B6AFA9E4F0838FC284F /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		4E77B7276E34706B17D9DC3A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5621F1A4C87BBE6E269957BA /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		6A7D65A21B6B15DB7DF05426 /* snapshot.rs */ = {isa = PBXFileReference; path = snapshot.rs; sourceTree = "<group>"; };
+		754D3E2D3E8D341F411603B8 /* AVFAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFAudio.framework; path = System/Library/Frameworks/AVFAudio.framework; sourceTree = SDKROOT; };
+		776D3B3C3CDD3FACAFC08187 /* audio_session.rs */ = {isa = PBXFileReference; path = audio_session.rs; sourceTree = "<group>"; };
+		79C8F6E1B3394EDEB2EC764C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		8621E3509236C38A330048D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8979383A45DEAE135E36D982 /* metadata.rs */ = {isa = PBXFileReference; path = metadata.rs; sourceTree = "<group>"; };
+		A5AB9A9A65C0600524C7B5FA /* bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bindings.h; sourceTree = "<group>"; };
+		B11F4CA20B561D04F6092384 /* libapp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libapp.a; sourceTree = "<group>"; };
+		B498F89F4E85881AD5308771 /* telstar_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = telstar_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB2C709DFF5259478CA76130 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D67B238C44D1E73D731345A2 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		DBA6AC837E05C8AD035F331B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E3761072779D2B7D28852EEC /* lib.rs */ = {isa = PBXFileReference; path = lib.rs; sourceTree = "<group>"; };
+		E3B0260005800E443AC5488B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FCAA3114B0DF0C7D79156D1C /* playlist.rs */ = {isa = PBXFileReference; path = playlist.rs; sourceTree = "<group>"; };
+		FD971CD9E3B7D73077683D88 /* main.rs */ = {isa = PBXFileReference; path = main.rs; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		659D36352F76441255AAE5A7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33A964801E26D6013D6B566E /* libapp.a in Frameworks */,
+				B520050E6DBB2BB7E210992E /* CoreGraphics.framework in Frameworks */,
+				5812D949B1AF37A757F4E50C /* Metal.framework in Frameworks */,
+				820D63E99712A790024F4759 /* MetalKit.framework in Frameworks */,
+				9E7A37E094B2209D73E7AA02 /* QuartzCore.framework in Frameworks */,
+				4BB28702A43AB890E70621CC /* Security.framework in Frameworks */,
+				AB393AC05A183BFECB6C4E10 /* UIKit.framework in Frameworks */,
+				DDF72A23699A4DC9A2F375B2 /* WebKit.framework in Frameworks */,
+				A4F2B9C2C69F22174203D27C /* AVFAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		093FC6E67A5610F68F666C15 /* telstar */ = {
+			isa = PBXGroup;
+			children = (
+				49CA2B6AFA9E4F0838FC284F /* main.mm */,
+				EAF9C4A41F32709B2B2BD5AA /* bindings */,
+			);
+			path = telstar;
+			sourceTree = "<group>";
+		};
+		27E190B43F9A1A6C5CBD1E03 = {
+			isa = PBXGroup;
+			children = (
+				3638A479E08F7227BE08F6FA /* assets */,
+				E3B0260005800E443AC5488B /* Assets.xcassets */,
+				4E77B7276E34706B17D9DC3A /* LaunchScreen.storyboard */,
+				5571C5D04328ED35E668A8B4 /* Externals */,
+				AAB2A516160C93FCF1E429B0 /* Sources */,
+				A867C09C2F6731A3DFB61CBA /* src */,
+				4B7A8E06C22CC4BFCD7B2517 /* telstar_iOS */,
+				8CDCB394AA903565F9BB87F0 /* Frameworks */,
+				FE51F841C5ABA0D0C5C471C0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4B7A8E06C22CC4BFCD7B2517 /* telstar_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DBA6AC837E05C8AD035F331B /* Info.plist */,
+				0FB3B3302B466740134590E1 /* telstar_iOS.entitlements */,
+			);
+			path = telstar_iOS;
+			sourceTree = "<group>";
+		};
+		5571C5D04328ED35E668A8B4 /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		8CDCB394AA903565F9BB87F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				754D3E2D3E8D341F411603B8 /* AVFAudio.framework */,
+				8621E3509236C38A330048D3 /* CoreGraphics.framework */,
+				B11F4CA20B561D04F6092384 /* libapp.a */,
+				5621F1A4C87BBE6E269957BA /* Metal.framework */,
+				D67B238C44D1E73D731345A2 /* MetalKit.framework */,
+				49728FD5C6B098DD883A4D27 /* QuartzCore.framework */,
+				79C8F6E1B3394EDEB2EC764C /* Security.framework */,
+				CB2C709DFF5259478CA76130 /* UIKit.framework */,
+				0DF0216E552685B2A8A529D0 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A867C09C2F6731A3DFB61CBA /* src */ = {
+			isa = PBXGroup;
+			children = (
+				776D3B3C3CDD3FACAFC08187 /* audio_session.rs */,
+				47A296E50E83FA10683B8FA7 /* icloud.rs */,
+				E3761072779D2B7D28852EEC /* lib.rs */,
+				FD971CD9E3B7D73077683D88 /* main.rs */,
+				8979383A45DEAE135E36D982 /* metadata.rs */,
+				FCAA3114B0DF0C7D79156D1C /* playlist.rs */,
+				3A512131D8738C2174429E5D /* scan.rs */,
+				6A7D65A21B6B15DB7DF05426 /* snapshot.rs */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+		AAB2A516160C93FCF1E429B0 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				093FC6E67A5610F68F666C15 /* telstar */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		EAF9C4A41F32709B2B2BD5AA /* bindings */ = {
+			isa = PBXGroup;
+			children = (
+				A5AB9A9A65C0600524C7B5FA /* bindings.h */,
+			);
+			path = bindings;
+			sourceTree = "<group>";
+		};
+		FE51F841C5ABA0D0C5C471C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B498F89F4E85881AD5308771 /* telstar_iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		"TEMP_B7EC706C-7BCC-4731-AE55-448B27D56237" /* arm64 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = arm64;
+			sourceTree = "<group>";
+		};
+		"TEMP_E502E165-895F-4C06-A075-A151353989F2" /* x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = x86_64;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8437564BFE05020344CBB56F /* telstar_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA1F630588B0EE69D6FFEE11 /* Build configuration list for PBXNativeTarget "telstar_iOS" */;
+			buildPhases = (
+				4D254FA72874625B21FD2E75 /* Build Rust Code */,
+				8603192D57ED0465F6C5B759 /* Sources */,
+				A16ACC8212C7E47E45517699 /* Resources */,
+				659D36352F76441255AAE5A7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = telstar_iOS;
+			packageProductDependencies = (
+			);
+			productName = telstar_iOS;
+			productReference = B498F89F4E85881AD5308771 /* telstar_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A148F7BB93C9BFC3ADB3A84 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					8437564BFE05020344CBB56F = {
+						DevelopmentTeam = NSDC3EDS2G;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 74557E15ED33818B7A075825 /* Build configuration list for PBXProject "telstar" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 27E190B43F9A1A6C5CBD1E03;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FE51F841C5ABA0D0C5C471C0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8437564BFE05020344CBB56F /* telstar_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A16ACC8212C7E47E45517699 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD44370BBAF80B35C15B34F8 /* Assets.xcassets in Resources */,
+				195AB3EBDA077404453CAA3B /* LaunchScreen.storyboard in Resources */,
+				415031B49A07D6874DA2BE51 /* assets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D254FA72874625B21FD2E75 /* Build Rust Code */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rust Code";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Externals/x86_64/${CONFIGURATION}/libapp.a",
+				"$(SRCROOT)/Externals/arm64/${CONFIGURATION}/libapp.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bun tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8603192D57ED0465F6C5B759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0412BD681C967973F82EA016 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2809E89F339A93DECE949434 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = telstar_iOS/telstar_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NSDC3EDS2G;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = telstar_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.hisgarden.telstar;
+				PRODUCT_NAME = "Telstar";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = arm64;
+			};
+			name = debug;
+		};
+		B76FB24C172EA32EC0734D3D /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = debug;
+		};
+		BA39AD0BCBE8299E5FBF6612 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = telstar_iOS/telstar_iOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NSDC3EDS2G;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = telstar_iOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.hisgarden.telstar;
+				PRODUCT_NAME = "Telstar";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = arm64;
+			};
+			name = release;
+		};
+		D0248290BC03CD4B81F50CA6 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		74557E15ED33818B7A075825 /* Build configuration list for PBXProject "telstar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B76FB24C172EA32EC0734D3D /* debug */,
+				D0248290BC03CD4B81F50CA6 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+		CA1F630588B0EE69D6FFEE11 /* Build configuration list for PBXNativeTarget "telstar_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2809E89F339A93DECE949434 /* debug */,
+				BA39AD0BCBE8299E5FBF6612 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A148F7BB93C9BFC3ADB3A84 /* Project object */;
+}
