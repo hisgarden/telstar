@@ -1,0 +1,169 @@
+version: "3"
+
+# Every command runs with strict shell semantics: a failing command, an unset
+# variable, or a failure inside a pipeline aborts the task instead of letting
+# later commands run against a broken state.
+set: [errexit, nounset, pipefail]
+
+# Rust builds must use the rustup toolchain, not the Homebrew rustc that
+# shadows it on PATH (Homebrew ships only the host std — iOS/universal targets
+# fail with E0463 "can't find crate for `core`"). go-task ignores a PATH
+# override in `env:` (verified on 3.48.0), so every Rust-touching command below
+# prefixes PATH="$HOME/.cargo/bin:$PATH" inline; the release scripts do the
+# same internally.
+
+tasks:
+  default:
+    desc: List available tasks
+    silent: true
+    cmds:
+      - task --list
+
+  install:
+    desc: Install dependencies
+    preconditions: [{sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}]
+    cmds:
+      - bun install
+
+  dev:
+    desc: Run the native macOS app (hot-reloads the frontend)
+    preconditions: [{sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}]
+    cmds:
+      - PATH="$HOME/.cargo/bin:$PATH" bun run tauri dev
+
+  test:
+    desc: Run the test suite
+    preconditions: [{sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}]
+    cmds:
+      - bun test
+
+  build:
+    desc: Type-check and build the web frontend, then the native app
+    preconditions:
+      - {sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}
+      - {sh: command -v rustup, msg: "rustup is required — https://rustup.rs (Homebrew rust lacks cross targets)"}
+    cmds:
+      - bun run build
+      - PATH="$HOME/.cargo/bin:$PATH" bun run tauri build
+
+  ios:dev:
+    desc: Build and run on the iOS Simulator
+    preconditions:
+      - {sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}
+      - {sh: command -v rustup, msg: "rustup is required — https://rustup.rs (Homebrew rust lacks iOS targets)"}
+    cmds:
+      - PATH="$HOME/.cargo/bin:$PATH" bun run tauri ios dev
+
+  ios:build:
+    desc: Build the iOS app
+    preconditions:
+      - {sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}
+      - {sh: command -v rustup, msg: "rustup is required — https://rustup.rs (Homebrew rust lacks iOS targets)"}
+      - {sh: rustup target list --installed | grep -qx aarch64-apple-ios, msg: "missing iOS target — rustup target add aarch64-apple-ios"}
+    cmds:
+      - PATH="$HOME/.cargo/bin:$PATH" bun run tauri ios build
+
+  clean:
+    desc: "Reclaim disk space from build artifacts (Rust target/, DerivedData, sim state, tool caches) — all regenerable, never touches source"
+    cmds:
+      - scripts/cleanup-build.sh {{.CLI_ARGS}}
+
+  verify:pack:
+    desc: "Probe a channel pack's streams: live/slow/dead + HTTP status + latency (curation aid). Usage: task verify:pack -- public/packs/world-news.json"
+    preconditions: [{sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}]
+    cmds:
+      - bun scripts/verify-pack.ts {{.CLI_ARGS}}
+
+  verify:sim:
+    desc: "Prove the iOS simulator runtime still boots and renders (run after Xcode/macOS updates)"
+    cmds:
+      - scripts/verify-sim.sh
+
+  sbom:
+    desc: Regenerate the CycloneDX SBOMs (JS + Rust), Bun-only — no npm
+    preconditions: [{sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}]
+    cmds:
+      - mkdir -p sbom
+      - FETCH_LICENSE=true bunx @cyclonedx/cdxgen@11 -t javascript --lifecycle pre-build --no-recurse -o sbom/telstar-js.cdx.json .
+      - FETCH_LICENSE=true bunx @cyclonedx/cdxgen@11 -t rust --no-recurse -o sbom/telstar-rust.cdx.json src-tauri
+
+  audit:sbom:
+    internal: true
+    desc: Generate the gate SBOMs (fingerprint-cached — re-runs only when the dependency tree changes)
+    preconditions:
+      - {sh: command -v bun, msg: "bun is required — brew install oven-sh/bun/bun"}
+    # go-task checksums sources vs generates: cdxgen (the slow step) is skipped
+    # when the lockfiles/manifests haven't changed since the last run.
+    sources:
+      - bun.lock
+      - package.json
+      - src-tauri/Cargo.lock
+      - src-tauri/Cargo.toml
+    generates:
+      - .cache/sbom-gate/telstar-js.cdx.json
+      - .cache/sbom-gate/telstar-rust.cdx.json
+    cmds:
+      - scripts/audit-deps.sh gen .cache/sbom-gate
+
+  audit:
+    desc: "Pre-release gate: SBOM the dependency tree and scan it against OSV. Fails on any untriaged advisory; suppressions live in osv-scanner.toml."
+    deps: [audit:sbom]   # cached by lockfile fingerprint
+    preconditions:
+      - {sh: command -v osv-scanner, msg: "osv-scanner is required — brew install osv-scanner"}
+      - {sh: test -f osv-scanner.toml, msg: "osv-scanner.toml (triaged suppression allowlist) is missing from the repo root"}
+    cmds:
+      # The scan itself ALWAYS runs — OSV data updates daily, so a cached "pass"
+      # would be a stale verdict even when the SBOM is unchanged.
+      - scripts/audit-deps.sh scan .cache/sbom-gate
+
+  publish:public:
+    desc: "Push the docs-free source snapshot to the GitHub mirror (HITL-gated force-push; normally run for you by release:macos)"
+    preconditions: [{sh: command -v gh, msg: "gh is required — brew install gh"}]
+    cmds:
+      - scripts/publish-public.sh
+
+  release:cask:
+    desc: "Point the Homebrew cask at a released DMG (version + sha256 from the artifact). Usage: task release:cask -- 0.6.1 path/to/Telstar_0.6.1_universal.dmg --push"
+    cmds:
+      - scripts/bump-cask.sh {{.CLI_ARGS}}
+
+  git:force-push-main:
+    desc: "HITL-gated force-push of a rewritten local main to GitLab: shows the divergence, requires typed approval, temporarily lifts branch protection, restores it on exit."
+    preconditions:
+      - {sh: command -v glab, msg: "glab is required — brew install glab"}
+    cmds:
+      - scripts/force-push-main.sh {{.CLI_ARGS}}
+
+  release:bump:
+    desc: "Sync the version across all manifests + create an annotated tag. Usage: task release:bump -- 0.5.1 [--push]"
+    preconditions: [{sh: command -v jq, msg: "jq is required — brew install jq"}]
+    cmds:
+      - scripts/bump-version.sh {{.CLI_ARGS}}
+
+  release:macos:
+    desc: "Build, sign, notarize + publish the macOS DMG to GitHub Releases and bump the Homebrew cask. Usage: task release:macos -- 0.5.0 [--check|--dry-run]"
+    # The version check is a precondition and the audit gate is the FIRST CMD
+    # (not a dep): go-task runs deps before preconditions, so a dep would burn
+    # ~30s of SBOM+scan before reporting a missing version argument.
+    preconditions:
+      - {sh: 'test -n "{{.CLI_ARGS}}"', msg: "version required — usage: task release:macos -- 0.6.1 [--check|--dry-run]"}
+    cmds:
+      - task: audit   # pre-release supply-chain gate — aborts the release if it fails
+      - scripts/release-macos.sh {{.CLI_ARGS}}
+
+  release:testflight:
+    desc: "Build, sign (Apple Distribution) + upload the iOS app to TestFlight via App Store Connect. Usage: task release:testflight -- [--check|--dry-run]"
+    deps: [audit]   # pre-release supply-chain gate — aborts the release if it fails
+    cmds:
+      - scripts/release-testflight.sh {{.CLI_ARGS}}
+
+# ── Changelog (most recent first) ────────────────────────────────────────────
+# 2026-06-10  Every script gets a task: clean, verify:pack, verify:sim, publish:public, release:cask.
+# 2026-06-10  HITL gates on remote writes; add git:force-push-main (gated elevate).
+# 2026-06-10  audit: split SBOM gen into fingerprint-cached audit:sbom dep; scan always fresh.
+# 2026-06-10  release:macos: fail fast on missing version (audit as cmd, not dep).
+# 2026-06-10  Harden: default task, strict shell flags, rustup PATH, preconditions.
+# 2026-06-10  Add audit gate (deps + SBOM + OSV scan); wire as release deps.
+# 2026-06-10  Add release:testflight task (build + upload the iOS app to TestFlight).
+# 2026-05-29  Add sbom task (Bun-only CycloneDX generation for JS + Rust).
+# 2026-05-29  Initial Taskfile: install, dev, test, build, ios:dev, ios:build.

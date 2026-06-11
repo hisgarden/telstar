@@ -1,0 +1,111 @@
+# osv-scanner.toml — triaged suppressions for Telstar's pre-release supply-chain
+# gate (`task audit`). Every entry below has been individually reviewed; the gate
+# FAILS on any advisory NOT listed here, so a new or untriaged finding blocks a
+# release until a human reviews it.
+#
+# `ignoreUntil` makes each suppression EXPIRE so the triage is revisited rather
+# than rotting forever — after that date the advisory re-trips the gate.
+#
+# Two justification classes appear below:
+#   (A) Linux-only: the GTK3 desktop backend is a Tauri *Linux* transitive
+#       dependency. Telstar ships macOS (WKWebView), iOS, and Android only —
+#       `cargo tree -e no-dev --target aarch64-apple-darwin -i <crate>` prints
+#       "nothing to print", i.e. the crate is NOT in any shipped compiled graph.
+#       (Same basis as the dismissed glib Dependabot alert.)
+#   (B) Unmaintained (informational): RUSTSEC "unmaintained" advisories are
+#       maintenance notices, not exploitable vulnerabilities. The unic-* crates
+#       are Apple-reachable but pulled transitively via tauri-utils -> urlpattern
+#       (not directly controllable); no fix is published and no exploit exists.
+
+# ─────────────────────────── (A) Linux-only GTK3 stack ───────────────────────
+# Not compiled into macOS/iOS/Android. Includes glib's real unsoundness bug
+# (RUSTSEC-2024-0429) — harmless here because the code is never built.
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0429"  # glib VariantStrIter unsoundness (alias GHSA-wrw7-89jp-8q8g)
+ignoreUntil = 2026-12-31
+reason = "Linux-only: glib is the GTK backend, not in any Apple/Android compiled graph."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0411"  # gdkwayland-sys unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0412"  # gdk unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0413"  # atk unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0414"  # gdkx11-sys unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0415"  # gtk unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0416"  # atk-sys unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0417"  # gdkx11 unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0418"  # gdk-sys unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0419"  # gtk3-macros unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0420"  # gtk-sys unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only GTK3 stack; not compiled into macOS/iOS/Android."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2024-0370"  # proc-macro-error unmaintained
+ignoreUntil = 2026-12-31
+reason = "Linux-only: pulled by the GTK3 stack; not in any Apple/Android compiled graph."
+
+# ───────────────── (B) Unmaintained, Apple-reachable, informational ──────────
+# unic-* via tauri-utils -> urlpattern. Unmaintained notices, no fix, no exploit;
+# resolved upstream when Tauri drops/replaces urlpattern.
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2025-0075"  # unic-char-range unmaintained
+ignoreUntil = 2026-12-31
+reason = "Unmaintained notice (not a vuln); transitive via tauri-utils->urlpattern, no fix available."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2025-0080"  # unic-common unmaintained
+ignoreUntil = 2026-12-31
+reason = "Unmaintained notice (not a vuln); transitive via tauri-utils->urlpattern, no fix available."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2025-0081"  # unic-char-property unmaintained
+ignoreUntil = 2026-12-31
+reason = "Unmaintained notice (not a vuln); transitive via tauri-utils->urlpattern, no fix available."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2025-0098"  # unic-ucd-version unmaintained
+ignoreUntil = 2026-12-31
+reason = "Unmaintained notice (not a vuln); transitive via tauri-utils->urlpattern, no fix available."
+
+[[IgnoredVulns]]
+id = "RUSTSEC-2025-0100"  # unic-ucd-ident unmaintained
+ignoreUntil = 2026-12-31
+reason = "Unmaintained notice (not a vuln); transitive via tauri-utils->urlpattern, no fix available."

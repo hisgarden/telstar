@@ -1,0 +1,116 @@
+name: telstar
+options:
+  bundleIdPrefix: org.hisgarden.telstar
+  deploymentTarget:
+    iOS: 15.0
+fileGroups: [../../src]
+configs:
+  debug: debug
+  release: release
+settingGroups:
+  app:
+    base:
+      PRODUCT_NAME: Telstar
+      PRODUCT_BUNDLE_IDENTIFIER: org.hisgarden.telstar
+targetTemplates:
+  app:
+    type: application
+    sources:
+      - path: Sources
+    scheme:
+      environmentVariables:
+        RUST_BACKTRACE: full
+        RUST_LOG: info
+    settings:
+      groups: [app]
+targets:
+  telstar_iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Assets.xcassets
+      - path: Externals
+      - path: telstar_iOS
+      - path: assets
+        buildPhase: resources
+        type: folder
+      - path: LaunchScreen.storyboard
+    info:
+      path: telstar_iOS/Info.plist
+      properties:
+        LSRequiresIPhoneOS: true
+        # Allow non-HTTPS HLS feeds (IPTV relays are often plain HTTP). Present
+        # in the shipped Info.plist; declared here so xcodegen regeneration keeps it.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        # Keep stream audio playing when backgrounded / screen-locked. Paired
+        # with the `.playback` AVAudioSession set in src-tauri/src/audio_session.rs
+        # and native HLS playback (the MSE/hls.js path is suspended in the
+        # background; only native AVFoundation audio survives).
+        UIBackgroundModes:
+          - audio
+        # TestFlight: standard HTTPS/ATS crypto only — no proprietary encryption,
+        # so builds skip the export-compliance questionnaire.
+        ITSAppUsesNonExemptEncryption: false
+        # Dark UI — light (white) status-bar glyphs, app-wide (not per-VC).
+        UIViewControllerBasedStatusBarAppearance: false
+        UIStatusBarStyle: UIStatusBarStyleLightContent
+        UILaunchStoryboardName: LaunchScreen
+        UIRequiredDeviceCapabilities: [arm64, metal]
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        CFBundleShortVersionString: 0.5.0
+        CFBundleVersion: "8"
+    entitlements:
+      path: telstar_iOS/telstar_iOS.entitlements
+      properties:
+        # iCloud key-value store for cross-device sync (icloud-sync, src/icloud.rs).
+        # Declared here so xcodegen regeneration keeps it (the App ID has iCloud enabled).
+        com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
+    scheme:
+      environmentVariables:
+        RUST_BACKTRACE: full
+        RUST_LOG: info
+    settings:
+      base:
+        ENABLE_BITCODE: false
+        # Apple Developer team for code signing. Declared here so xcodegen
+        # regeneration keeps it; the checked-in pbxproj had it but project.yml didn't.
+        DEVELOPMENT_TEAM: NSDC3EDS2G
+        CODE_SIGN_STYLE: Automatic
+        ARCHS: [arm64]
+        VALID_ARCHS: arm64 
+        LIBRARY_SEARCH_PATHS[arch=x86_64]: $(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)
+        LIBRARY_SEARCH_PATHS[arch=arm64]: $(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/$(PLATFORM_NAME) $(DEVELOPER_DIR)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.0/$(PLATFORM_NAME)
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: true
+        EXCLUDED_ARCHS[sdk=iphoneos*]: x86_64
+      groups: [app]
+    dependencies:
+      - framework: libapp.a
+        embed: false
+      - sdk: CoreGraphics.framework
+      - sdk: Metal.framework
+      - sdk: MetalKit.framework
+      - sdk: QuartzCore.framework
+      - sdk: Security.framework
+      - sdk: UIKit.framework
+      - sdk: WebKit.framework
+      # Resolves AVAudioSession symbols pulled in by objc2-avf-audio
+      # (src/audio_session.rs); the Rust staticlib's framework link directive
+      # isn't propagated to Xcode's final link, so link it explicitly here.
+      - sdk: AVFAudio.framework
+    preBuildScripts:
+      - script: bun tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths "${FRAMEWORK_SEARCH_PATHS:?}" --header-search-paths "${HEADER_SEARCH_PATHS:?}" --gcc-preprocessor-definitions "${GCC_PREPROCESSOR_DEFINITIONS:-}" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}
+        name: Build Rust Code
+        basedOnDependencyAnalysis: false
+        outputFiles:
+          - $(SRCROOT)/Externals/x86_64/${CONFIGURATION}/libapp.a
+          - $(SRCROOT)/Externals/arm64/${CONFIGURATION}/libapp.a

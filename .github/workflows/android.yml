@@ -1,0 +1,92 @@
+# Builds the Android app (arm64-v8a, debug APK) on a GitHub-hosted Linux
+# runner — no local Android machine needed. Run it from the Actions tab
+# (workflow_dispatch) to download the APK as an artifact, or push a tag like
+# v0.1.0 to also attach it to a GitHub Release.
+#
+# The APK is DEBUG-signed (Android's auto debug keystore), so it installs by
+# sideloading on any phone with "install from unknown sources" enabled — no
+# keystore or repo secrets required. It is for testing only, not for the Play
+# Store. arm64-v8a only: it runs on modern physical devices, not x86_64
+# emulators. The Tauri Android project (src-tauri/gen/android) is generated
+# here on every run and is not committed.
+name: Android build
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write # needed to create a Release on tag
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Android NDK
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r26d
+          link-to-sdk: true
+
+      # Tauri reads NDK_HOME at `android init`/`android build` time.
+      - name: Export NDK_HOME
+        run: echo "NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> "$GITHUB_ENV"
+
+      - name: Set up Rust (with Android target)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install frontend dependencies
+        run: bun install --frozen-lockfile
+
+      # Generates src-tauri/gen/android (gitignored). CI=true keeps it
+      # non-interactive; --ci is belt-and-suspenders.
+      - name: Initialize Tauri Android project
+        run: bun tauri android init --ci
+
+      # Builds the frontend (beforeBuildCommand: bun run build), compiles the
+      # Rust app for aarch64, and assembles a debug-signed APK. Bun passes the
+      # --target argument correctly (npm does not — tauri-apps/tauri#11890).
+      # --debug is required: a --release build with no signing config produces
+      # an uninstallable -release-unsigned.apk (tauri-apps/tauri#11453).
+      - name: Build Android APK (arm64 debug)
+        run: bun tauri android build --apk --target aarch64 --debug
+
+      - name: Upload APK (artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: telstar-android-arm64-debug
+          if-no-files-found: error
+          path: src-tauri/gen/android/app/build/outputs/apk/**/debug/*.apk
+
+      - name: Attach APK to the Release (tag builds only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: src-tauri/gen/android/app/build/outputs/apk/**/debug/*.apk
