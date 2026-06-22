@@ -1,0 +1,122 @@
+# Telstar feed-update pipeline (producer side) — INDEPENDENT of the app build
+# and release. This file defines ONLY the World News feed jobs: a scheduled
+# re-validation that proposes changes via a merge request, and a Pages deploy
+# that publishes the remote manifest after merge. It deliberately contains no
+# app/Rust/Tauri build — those live on the GitHub mirror (.github/workflows/
+# android.yml, windows.yml) and the local release Taskfile. (KTD1, R7)
+#
+# Two hard rules encoded below:
+#   1. CI runs `feeds:validate` + `feeds:manifest` ONLY — NEVER `feeds:update`.
+#      No roster edit (and so no retirement) ever happens unattended. A failed
+#      probe is surfaced for human review, never auto-applied. (KTD2, KTD3)
+#   2. Publishing is gated by a human-reviewed MR into the protected default
+#      branch. Branch protection requiring review on changes to public/packs/
+#      and manifest/ is a DEPLOYMENT PREREQUISITE (see docs/curation.md); without
+#      it this gate is advisory only. (KTD3)
+#
+# Secrets: the propose job needs a least-privilege project access token in the
+# masked/protected CI/CD variable CI_FEEDS_MR_TOKEN — scoped to push the
+# candidate branch and open a merge request (api or write_repository), NOT broad
+# repository-write across the project. The pages deploy uses no token.
+
+# Pin the toolchain image to the repo's Bun version. Prefer a digest pin
+# (oven/bun:1.3.8@sha256:...) once resolved in your registry; the version tag is
+# the minimum bar.
+default:
+  image: oven/bun:1.3.8
+
+stages:
+  - propose
+  - deploy
+
+variables:
+  PACK: public/packs/world-news.json
+  CANDIDATE_BRANCH: feeds/auto-revalidate
+  # Never let an interactive prompt hang a scheduled run.
+  GIT_DEPTH: "20"
+
+# ── Scheduled re-validation → proposes an MR (never publishes) ────────────────
+# Trigger from Settings → CI/CD → Pipeline schedules (e.g. weekly). Probe
+# failures are written into the MR description as review flags; a "dead" is a
+# signal, not a verdict (geo-block / Referer gate / runner DNS), so the job
+# itself does NOT fail on dead channels.
+feeds:propose:
+  stage: propose
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq --no-install-recommends git curl ca-certificates
+    - bun install --frozen-lockfile
+  script:
+    # Validate the COMMITTED pack (SSRF-contained: only already-reviewed URLs are
+    # probed) and capture the live/slow/dead report. `|| true` — dead is a flag.
+    - bun scripts/verify-pack.ts "$PACK" | tee validation.log || true
+    # Regenerate the publishable manifest from the committed pack. This is the
+    # only file CI may change — it does NOT touch the pack roster (no feeds:update).
+    - bun scripts/build-manifest.ts
+    # Build the MR body: the validation report as review flags.
+    - |
+      {
+        echo "## Scheduled feed re-validation"
+        echo
+        echo "Automated probe of \`$PACK\` from the CI runner. **A \"dead\" is a"
+        echo "signal, not a verdict** — confirm on a normal network / in-app before"
+        echo "retiring (docs/curation.md). CI never auto-retires; apply roster"
+        echo "edits locally with \`task feeds:update\`."
+        echo
+        echo '```'
+        cat validation.log
+        echo '```'
+      } > mr-body.md
+    # Commit only the manifest if it changed; push the candidate branch with the
+    # scoped token; open the MR if one is not already open (push updates an
+    # existing MR's diff, so re-opening is a harmless no-op).
+    - |
+      git config user.email "feeds-bot@telstar.local"
+      git config user.name "Telstar feeds bot"
+      git checkout -B "$CANDIDATE_BRANCH"
+      git add manifest/world-news.json
+      if git diff --cached --quiet; then
+        echo "Manifest unchanged; no MR diff to push. Validation report is in the job artifacts.";
+      else
+        git commit -m "chore(feeds): scheduled manifest re-validation"
+        git push -o ci.skip --force \
+          "https://oauth2:${CI_FEEDS_MR_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" \
+          "HEAD:${CANDIDATE_BRANCH}"
+        curl --silent --show-error \
+          --request POST \
+          --header "PRIVATE-TOKEN: ${CI_FEEDS_MR_TOKEN}" \
+          --data "source_branch=${CANDIDATE_BRANCH}" \
+          --data "target_branch=${CI_DEFAULT_BRANCH}" \
+          --data "remove_source_branch=true" \
+          --data-urlencode "title=Scheduled feed re-validation" \
+          --data-urlencode "description@mr-body.md" \
+          "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests" || true
+      fi
+  artifacts:
+    when: always
+    paths:
+      - validation.log
+    expire_in: 30 days
+
+# ── Publish the manifest to GitLab Pages (post-merge only) ────────────────────
+# Runs only on the protected default branch and only when the manifest actually
+# changed, i.e. after a reviewed MR merges. Serves the manifest at
+# https://<namespace>.gitlab.io/<project>/world-news.json — the stable URL the
+# deferred app-side overlay consumer will fetch. (KTD5, R5)
+pages:
+  stage: deploy
+  image: alpine:3.20
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - manifest/world-news.json
+  script:
+    # Build a clean site dir holding ONLY the manifest — do not publish the app's
+    # bundled public/ assets through Pages.
+    - rm -rf .pages-site && mkdir -p .pages-site
+    - cp manifest/world-news.json .pages-site/world-news.json
+    - rm -rf public && mv .pages-site public
+  artifacts:
+    paths:
+      - public

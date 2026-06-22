@@ -1,0 +1,21 @@
+/* Global shell: dark surface only. Component styling lives in the Lit
+   components' shadow DOM (see src/app.ts). */
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #0d0d10;
+  /* Kill body rubber-banding on iOS so only the channel list scrolls; the shell
+     itself stays put under the status bar / home indicator. */
+  overscroll-behavior: none;
+}
+
+body {
+  /* The app shell owns its own height + safe-area padding (see src/app.ts);
+     the page must not introduce a second scroll surface on iPhone. */
+  overflow: hidden;
+}

@@ -1,0 +1,48 @@
+[package]
+name = "telstar"
+version = "0.6.2"
+description = "Telstar — a FOSS global TV explorer"
+authors = ["hisgarden"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "telstar_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+ureq = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# iCloud key-value store bridge (Apple only). Versions match what Tauri already
+# vendors so no duplicate crate is pulled in.
+[target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = [
+  "NSUbiquitousKeyValueStore",
+  "NSString",
+  "NSDictionary",
+  "NSArray",
+] }
+
+# Background-audio session (iOS only). `AVAudioSession` does not exist on macOS,
+# so this is scoped to iOS rather than the shared Apple block. Pinned to the
+# objc2 0.6 / objc2-foundation 0.3 generation already vendored above so no second
+# copy of objc2 is pulled in. `AVAudioSessionTypes` is required by
+# `setCategory:error:` and the category constants.
+[target.'cfg(target_os = "ios")'.dependencies]
+objc2-avf-audio = { version = "0.3.2", features = [
+  "AVAudioSession",
+  "AVAudioSessionTypes",
+] }
+

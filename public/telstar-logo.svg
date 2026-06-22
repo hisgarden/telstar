@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#9ecbff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Telstar">
+  <!-- Globe: a global TV explorer. Neutral by design — no flags, no national imagery. -->
+  <circle cx="25" cy="39" r="15" />
+  <ellipse cx="25" cy="39" rx="6" ry="15" />
+  <line x1="10" y1="39" x2="40" y2="39" />
+  <!-- Broadcast: signal radiating worldwide (the Telstar satellite heritage). -->
+  <circle cx="46" cy="19" r="2.5" fill="#9ecbff" stroke="none" />
+  <path d="M51 14 a9 9 0 0 1 0 12" />
+  <path d="M56 9 a16 16 0 0 1 0 22" />
+</svg>
